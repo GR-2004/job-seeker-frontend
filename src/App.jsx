@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("", {withCredentials: true});
+        const res = await axios.get("http://localhost:8000/api/v1/users/getUser", {withCredentials: true});
         setUser(res.data.user);
         setIsAuthorized(true);
       } catch (error) {
