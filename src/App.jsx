@@ -1,7 +1,7 @@
 import React, {useEffect, useContext} from 'react'
 import './App.css'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { Context } from './main.jsx'
+import { Context } from './main'
 import Login from './components/Auth/Login.jsx'
 import Register from './components/Auth/Register.jsx'
 import Navbar from './components/Layout/Navbar.jsx'
@@ -25,14 +25,16 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/users/getUser", {withCredentials: true});
-        setUser(res.data.user);
+        const {data} = await axios.get("http://localhost:8000/api/v1/users/getUser", {withCredentials: true});
+        // console.log(data)
+        // console.log(data.user)
+        setUser(data.user);
         setIsAuthorized(true);
       } catch (error) {
         setIsAuthorized(false);
       }
     };
-    fetchUser();
+    fetchUser()
   }, [isAuthorized]);
 
 
