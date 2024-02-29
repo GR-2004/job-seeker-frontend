@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -71,6 +71,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="ganesh@gmail.com"
+                  autoComplete="email"
                 />
                 <MdOutlineMailOutline/>
               </div>
@@ -83,6 +84,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="XXXXXXXX"
+                  autoComplete="current-password"
                 />
                 <RiLock2Fill/>
               </div>

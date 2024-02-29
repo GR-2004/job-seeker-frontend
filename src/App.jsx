@@ -26,9 +26,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const {data} = await axios.get("http://localhost:8000/api/v1/users/getUser", {withCredentials: true});
-        // console.log(data)
-        // console.log(data.user)
-        setUser(data.user);
+        setUser(data.data);
         setIsAuthorized(true);
       } catch (error) {
         setIsAuthorized(false);

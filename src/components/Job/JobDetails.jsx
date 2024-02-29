@@ -11,22 +11,25 @@ const JobDetails = () => {
   const { isAuthorized, user } = useContext(Context);
 
   useEffect(() => {
-    try {
-      axios
-        .get(`http://localhost:8000/api/v1/jobs/getAJob/${id}`, {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/jobs/getAJob/${id}`, {
           withCredentials: true,
-        })
-        .then((res) => {
-          setJob(res.data.data);
         });
-    } catch (error) {
-      console.log(error.response.data.json);
-    }
-  }, []);
+        setJob(response.data.data);
+      } catch (error) {
+        console.error("Error fetching job:", error);
+      }
+    };
 
-  if (!isAuthorized) {
-    navigateTo("/login");
-  }
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    if (!isAuthorized) {
+      navigateTo("/login");
+    }
+  }, [isAuthorized, navigateTo]);
 
   return (
     <>

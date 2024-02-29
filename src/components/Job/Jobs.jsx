@@ -10,18 +10,23 @@ const Jobs = () => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    try {
-      axios.get("http://localhost:8000/api/v1/jobs/getAllJobs", {withCredentials: true}).then((res)=> {
-        setJobs(res.data);
-      });
-    } catch (error) {
-      console.log(error)
-    }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/v1/jobs/getAllJobs", { withCredentials: true });
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  if(!isAuthorized){
-    navigateTo("/login");
-  }
+  useEffect(() => {
+    if (!isAuthorized) {
+      navigateTo("/login");
+    }
+  }, [isAuthorized, navigateTo]);
 
   return (
     <>
