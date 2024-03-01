@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
+
 * {
   margin: 0;
   padding: 0;
@@ -149,6 +150,7 @@ p {
   background: #2d5649;
   font-size: 1.2rem;
   border-radius: 7px;
+  cursor: pointer;
 }
 .authPage .container form a {
   padding: 12px;
@@ -827,6 +829,7 @@ p {
   padding: 10px 30px;
   font-size: 20px;
   font-weight: 500;
+  cursor: pointer;
 }
 @media (max-width: 1520px) {
   .my_applications .container {
@@ -951,6 +954,7 @@ p {
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 2px;
+  cursor: pointer;
 }
 @media (max-width: 1520px) {
   .job_post .container {
@@ -1073,6 +1077,7 @@ p {
   gap: 20px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .myJobs .container .banner .card .button_wrapper .edit_btn,
 .myJobs .container .banner .card .button_wrapper .delete_btn {
@@ -1084,6 +1089,7 @@ p {
   padding: 7px;
   border: none;
   background: #ffc107;
+  cursor: pointer;
 }
 .myJobs .container .banner .card .button_wrapper .delete_btn {
   background: #d9534f;
@@ -1284,6 +1290,7 @@ nav .hamburger {
   nav .show-menu button:hover {
     background: #18191c;
     color: #f1f3f6;
+    cursor: pointer;
   }
 }
 @media (max-width: 490px) {
@@ -1313,6 +1320,7 @@ nav .hamburger {
   transition: all 0.3s;
   color: #f1f3f6;
 }
+
 .resume-modal {
   width: 100%;
   display: flex;
@@ -1342,10 +1350,53 @@ nav .hamburger {
 }
 .resume-modal .modal-content img {
   max-width: 550px;
+  background-size: cover;
   height: auto;
 }
 @media (max-width: 1130px) {
   .resume-modal {
     z-index: 11;
   }
+}
+.resume-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.resume-container {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.pdf-page {
+  width: 100%;
+}
+
+.image-resume {
+  max-width: 100%;
+  height: auto;
 }
