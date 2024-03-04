@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/login",
+        "https://job-seeker-backend.onrender.com/api/v1/users/login",
         { email, role, password },
         {
           withCredentials: true,

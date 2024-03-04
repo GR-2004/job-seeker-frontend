@@ -37,7 +37,7 @@ const Application = () => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/api/v1/applications/postApplication/${id}`,
+        `https://job-seeker-backend.onrender.com/api/v1/applications/postApplication/${id}`,
         formData,
         {
           withCredentials: true,

@@ -18,7 +18,7 @@ const MyJob = () => {
     const fetchJobs = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v1/jobs/getMyPostedJobs",
+          "https://job-seeker-backend.onrender.com/api/v1/jobs/getMyPostedJobs",
           { withCredentials: true }
         );
         setMyJobs(data.data);
@@ -50,7 +50,7 @@ const MyJob = () => {
   const handleUpdateJob = async (jobId) => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
     await axios
-      .put(`http://localhost:8000/api/v1/jobs/updatejob/${jobId}`, updatedJob, {
+      .put(`https://job-seeker-backend.onrender.com/api/v1/jobs/updatejob/${jobId}`, updatedJob, {
         withCredentials: true,
       })
       .then((res) => {
@@ -65,7 +65,7 @@ const MyJob = () => {
   //function for deleting job
   const handleDeleteJob = async (jobId) => {
     await axios
-      .delete(`http://localhost:8000/api/v1/jobs/deleteJob/${jobId}`, {
+      .delete(`https://job-seeker-backend.onrender.com/api/v1/jobs/deleteJob/${jobId}`, {
         withCredentials: true,
       })
       .then((res) => {

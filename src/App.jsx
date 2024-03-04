@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const {data} = await axios.get("http://localhost:8000/api/v1/users/getUser", {withCredentials: true});
+        const {data} = await axios.get("https://job-seeker-backend.onrender.com/api/v1/users/getUser", {withCredentials: true});
         setUser(data.data);
         setIsAuthorized(true);
       } catch (error) {

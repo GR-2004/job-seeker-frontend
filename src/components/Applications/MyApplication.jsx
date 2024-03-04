@@ -22,13 +22,13 @@ const MyApplication = () => {
       try {
         if (user && user.role === "Recruiter") {
           const res = await axios.get(
-            "http://localhost:8000/api/v1/applications/recruiter/getAllApplications",
+            "https://job-seeker-backend.onrender.com/api/v1/applications/recruiter/getAllApplications",
             { withCredentials: true }
           );
           setApplication(res.data.data);
         } else {
           const res = await axios.get(
-            "http://localhost:8000/api/v1/applications/jobSeeker/getAllApplications",
+            "https://job-seeker-backend.onrender.com/api/v1/applications/jobSeeker/getAllApplications",
             { withCredentials: true }
           );
           setApplication(res.data.data);
@@ -50,7 +50,7 @@ const MyApplication = () => {
   const deleteApplication = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/applications/deleteApplication/${id}`,
+        `https://job-seeker-backend.onrender.com/api/v1/applications/deleteApplication/${id}`,
         { withCredentials: true }
       );
       toast.success(res.data.message);
