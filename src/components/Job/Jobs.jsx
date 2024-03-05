@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Jobs = () => {
-  const [jobs, setJobs, user] = useState([]);
-  const { isAuthorized } = useContext(Context);
+  const [jobs, setJobs] = useState([]);
+  const { isAuthorized, user } = useContext(Context);
   const navigateTo = useNavigate();
 
   useEffect(() => {
