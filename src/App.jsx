@@ -20,7 +20,6 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser, user } = useContext(Context);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -47,6 +46,7 @@ const App = () => {
         console.error(error);
       }
     };
+
 
     fetchUser();
   }, [setIsAuthorized, setUser]);
