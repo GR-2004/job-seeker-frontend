@@ -24,27 +24,32 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = user.accessToken;
+        // Retrieving access token from cookies
+        const accessToken = document.cookie.split('; ').find(row => row.startsWith('accessToken')).split('=')[1];
 
-        const { data } = await axios.get(
-          "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-
-            withCredentials: true,
-          }
-        );
-        setUser(data.data);
-        setIsAuthorized(true);
+        if (accessToken) {
+          const { data } = await axios.get(
+            "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              withCredentials: true,
+            }
+          );
+          setUser(data.data);
+          setIsAuthorized(true);
+        } else {
+          setIsAuthorized(false);
+        }
       } catch (error) {
         setIsAuthorized(false);
-        console.log(error);
+        console.error(error);
       }
     };
+
     fetchUser();
-  }, [isAuthorized]);
+  }, [setIsAuthorized, setUser]);
 
   return (
     <>
