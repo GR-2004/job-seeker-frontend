@@ -20,31 +20,34 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser, user } = useContext(Context);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = user.accessToken;
+        const token = user?.accessToken; // Access token might not exist if the user is not authenticated
 
-        const { data } = await axios.get(
-          "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-
-            withCredentials: true,
-          }
-        );
-        setUser(data.data);
-        setIsAuthorized(true);
+        if (token) {
+          const { data } = await axios.get(
+            "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+            }
+          );
+          setUser(data.data);
+          setIsAuthorized(true);
+        } else {
+          setIsAuthorized(false);
+        }
       } catch (error) {
         setIsAuthorized(false);
-        console.log(error);
+        console.error(error);
       }
     };
+
     fetchUser();
-  }, [isAuthorized]);
+  }, [user?.accessToken]); // Include user.accessToken in the dependency array
 
   return (
     <>
