@@ -23,15 +23,14 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Retrieving access token from cookies
-        const accessToken = document.cookie.split('; ').find(row => row.startsWith('accessToken')).split('=')[1];
+        const token = user?.accessToken; // Access token might not exist if the user is not authenticated
 
-        if (accessToken) {
+        if (token) {
           const { data } = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
             {
               headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${token}`,
               },
               withCredentials: true,
             }
@@ -43,13 +42,13 @@ const App = () => {
         }
       } catch (error) {
         setIsAuthorized(false);
-        console.error(error);
+        console.log(error);
       }
     };
 
-
     fetchUser();
-  }, [setIsAuthorized, setUser]);
+  }, [user?.accessToken]);
+
 
   return (
     <>
