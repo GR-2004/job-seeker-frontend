@@ -25,6 +25,8 @@ const App = () => {
       try {
         // Retrieving access token from cookies
         const accessToken = document.cookie.split('; ').find(row => row.startsWith('accessToken')).split('=')[1];
+        console.log(accessToken)
+        console.log(document.cookie)
 
         if (accessToken) {
           const { data } = await axios.get(
