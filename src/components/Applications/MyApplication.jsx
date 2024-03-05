@@ -20,16 +20,28 @@ const MyApplication = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (user && user.role === "Recruiter") {
+        if (user.user && user.user.role === "Recruiter") {
+          const token = user?.accessToken;
           const res = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/applications/recruiter/getAllApplications",
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           setApplication(res.data.data);
         } else {
+          const token = user?.accessToken;
           const res = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/applications/jobSeeker/getAllApplications",
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           setApplication(res.data.data);
         }
@@ -49,9 +61,15 @@ const MyApplication = () => {
 
   const deleteApplication = async (id) => {
     try {
+      const token = user?.accessToken;
       const res = await axios.delete(
         `https://job-seeker-backend.onrender.com/api/v1/applications/deleteApplication/${id}`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       toast.success(res.data.message);
       setApplication((prevApplications) =>
