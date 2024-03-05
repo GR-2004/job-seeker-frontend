@@ -12,6 +12,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      const token = user?.accessToken;
       const response = await axios.get(
         "https://job-seeker-backend.onrender.com/api/v1/users/logout",
         {
