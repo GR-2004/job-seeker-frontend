@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const { isAuthorized, setIsAuthorized, user } = useContext(Context);
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
   const navigateTo = useNavigate();
 
   const handleLogout = async () => {
@@ -24,6 +24,7 @@ const Navbar = () => {
       );
       toast.success(response.data.message);
       setIsAuthorized(false);
+      setUser(null);
       navigateTo("/login");
     } catch (error) {
       toast.error(error.message), setIsAuthorized(true);
