@@ -33,7 +33,6 @@ const Navbar = () => {
 
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
-      <h1>hi</h1>
       <div className="container">
         <div className="logo">
           <img src="/JobZee-logos__white.png" alt="logo" />
