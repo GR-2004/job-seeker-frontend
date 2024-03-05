@@ -51,7 +51,7 @@ const PostJob = () => {
   };
 
   useEffect(() => {
-    if (!isAuthorized || (user && user.role !== "Recruiter")) {
+    if (!isAuthorized || (user.user && user.user.role !== "Recruiter")) {
       navigateTo("/");
     }
   }, [isAuthorized, user, navigateTo]);

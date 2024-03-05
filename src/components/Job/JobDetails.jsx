@@ -72,7 +72,7 @@ const JobDetails = () => {
               Posted On: <span> {job.jobPostedOn} </span>
             </p>
             <p>
-              {user && user.role === "Recruiter" ? (
+              {user.user && user.user.role === "Recruiter" ? (
                 <></>
               ) : (
                 <Link to={`/application/${job._id}`}>Apply Now</Link>
