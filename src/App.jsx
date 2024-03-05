@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = usre.accessToken;
+        const token = user.accessToken;
 
         const { data } = await axios.get(
           "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
