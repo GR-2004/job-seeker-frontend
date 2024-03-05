@@ -21,7 +21,7 @@ const Jobs = () => {
             },
           }
         );
-        setJobs(response.data);
+        setJobs(response.data.data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       }
@@ -42,8 +42,8 @@ const Jobs = () => {
         <div className="container">
           <h1>ALL AVAILABLE JOBS</h1>
           <div className="banner">
-            {jobs.data &&
-              jobs.data.map((element) => {
+            {jobs &&
+              jobs.map((element) => {
                 return (
                   <div className="card" key={element._id}>
                     <p>{element.title}</p>
