@@ -17,9 +17,15 @@ const MyJob = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        const token = user?.accessToken;
         const { data } = await axios.get(
           "https://job-seeker-backend.onrender.com/api/v1/jobs/getMyPostedJobs",
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setMyJobs(data.data);
       } catch (error) {
@@ -49,10 +55,18 @@ const MyJob = () => {
   //function for editing job
   const handleUpdateJob = async (jobId) => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
+    const token = user?.accessToken;
     await axios
-      .put(`https://job-seeker-backend.onrender.com/api/v1/jobs/updatejob/${jobId}`, updatedJob, {
-        withCredentials: true,
-      })
+      .put(
+        `https://job-seeker-backend.onrender.com/api/v1/jobs/updatejob/${jobId}`,
+        updatedJob,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         toast.success(res.data.message);
         setEditingMode(null);
@@ -64,10 +78,17 @@ const MyJob = () => {
 
   //function for deleting job
   const handleDeleteJob = async (jobId) => {
+    const token = user?.accessToken;
     await axios
-      .delete(`https://job-seeker-backend.onrender.com/api/v1/jobs/deleteJob/${jobId}`, {
-        withCredentials: true,
-      })
+      .delete(
+        `https://job-seeker-backend.onrender.com/api/v1/jobs/deleteJob/${jobId}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         toast.success(res.data.message);
         setMyJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));

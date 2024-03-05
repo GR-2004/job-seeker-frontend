@@ -13,9 +13,16 @@ const JobDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://job-seeker-backend.onrender.com/api/v1/jobs/getAJob/${id}`, {
-          withCredentials: true,
-        });
+        const token = user?.accessToken;
+        const response = await axios.get(
+          `https://job-seeker-backend.onrender.com/api/v1/jobs/getAJob/${id}`,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setJob(response.data.data);
       } catch (error) {
         console.error("Error fetching job:", error);

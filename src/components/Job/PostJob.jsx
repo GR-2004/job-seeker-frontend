@@ -4,7 +4,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-
 const PostJob = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,24 +19,30 @@ const PostJob = () => {
 
   const handleJobPost = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("https://job-seeker-backend.onrender.com/api/v1/jobs/postJob", 
-      {
-        title,
-        description,
-        category,
-        location,
-        salary,
-        requiredExperience,
-        requiredSkills,
-        employmentType
-      }, 
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
+      const token = user?.accessToken;
+      await axios.post(
+        "https://job-seeker-backend.onrender.com/api/v1/jobs/postJob",
+        {
+          title,
+          description,
+          category,
+          location,
+          salary,
+          requiredExperience,
+          requiredSkills,
+          employmentType,
         },
-      });
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       toast.success("Job posted successfully!");
     } catch (error) {
       console.error("Error posting job:", error);
@@ -114,8 +119,7 @@ const PostJob = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter Job Description"
-            >
-            </textarea>
+            ></textarea>
             <div className="wrapper">
               <input
                 type="text"
@@ -124,15 +128,15 @@ const PostJob = () => {
                 placeholder="Enter Required Experience"
               />
               <select
-              value={employmentType}
-              onChange={(e) => setEmploymentType(e.target.value)}
-            >
-              <option value="">Select Employment Type</option>
-              <option value="full-time">Full-time</option>
-              <option value="part-time">Part-time</option>
-              <option value="contract">Contract</option>
-              <option value="freelance">Freelance</option>
-            </select>
+                value={employmentType}
+                onChange={(e) => setEmploymentType(e.target.value)}
+              >
+                <option value="">Select Employment Type</option>
+                <option value="full-time">Full-time</option>
+                <option value="part-time">Part-time</option>
+                <option value="contract">Contract</option>
+                <option value="freelance">Freelance</option>
+              </select>
             </div>
             <div className="wrapper">
               <input
