@@ -16,6 +16,9 @@ const Navbar = () => {
         "https://job-seeker-backend.onrender.com/api/v1/users/logout",
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       toast.success(response.data.message);

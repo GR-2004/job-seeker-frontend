@@ -47,7 +47,7 @@ const App = () => {
     };
 
     fetchUser();
-  }, [user?.accessToken]);
+  }, [isAuthorized]);
 
 
   return (
