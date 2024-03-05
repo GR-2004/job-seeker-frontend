@@ -22,10 +22,10 @@ const Login = () => {
         "https://job-seeker-backend.onrender.com/api/v1/users/login",
         { email, role, password },
         {
-          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       toast.success(response.data.message);
