@@ -32,35 +32,6 @@ const Navbar = () => {
     }
   };
 
-  
-  useEffect(() => {
-    if (isAuthorized && !user) {
-      // Fetch user data if user is authorized but not available in context
-      const fetchUser = async () => {
-        try {
-          const token = localStorage.getItem('accessToken');
-          const { data } = await axios.get(
-            "https://job-seeker-backend.onrender.com/api/v1/users/getUser",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              withCredentials: true,
-            }
-          );
-          setIsAuthorized(true);
-          // Set user data in context
-          setUser(data.data);
-        } catch (error) {
-          console.error("Error fetching user:", error);
-          setIsAuthorized(false);
-        }
-      };
-
-      fetchUser();
-    }
-  }, [isAuthorized, setUser]);
-  
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
       <div className="container">
