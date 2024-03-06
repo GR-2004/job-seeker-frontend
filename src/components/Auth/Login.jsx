@@ -3,8 +3,7 @@ import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
-import { FaPencilAlt, FaRegUser } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md"
 import { RiLock2Fill } from "react-icons/ri";
 
@@ -40,9 +39,14 @@ const Login = () => {
     }
   };
 
-  if (isAuthorized) {
-    return <Navigate to={"/"} />;
-  }
+  useEffect(() => {
+    if (isAuthorized) {
+      return <Navigate to={"/"} />;
+    }
+    else{
+      return <Navigate to={"/login"}/> 
+    }
+  }, []);
 
   return (
     <>
