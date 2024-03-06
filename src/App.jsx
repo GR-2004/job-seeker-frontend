@@ -23,7 +23,9 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = user?.accessToken; // Access token might not exist if the user is not authenticated
+        // const token = user?.accessToken; // Access token might not exist if the user is not authenticated
+
+        const token = localStorage.getItem('accessToken');
 
         if (token) {
           const { data } = await axios.get(
@@ -47,7 +49,7 @@ const App = () => {
     };
 
     fetchUser();
-  }, [isAuthorized]);
+  }, [setIsAuthorized, setUser]);
 
 
   return (

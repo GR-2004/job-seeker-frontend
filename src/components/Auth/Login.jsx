@@ -3,9 +3,8 @@ import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
-import { FaPencilAlt, FaRegUser } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
-import { MdOutlineMailOutline } from "react-icons/md"
+import { FaRegUser } from "react-icons/fa";
+import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 
 const Login = () => {
@@ -14,6 +13,14 @@ const Login = () => {
   const [role, setRole] = useState("");
 
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+
+  useEffect(() => {
+    // Check if the user is already authorized (has a valid access token)
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setIsAuthorized(true);
+    }
+  }, [setIsAuthorized]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,9 +40,10 @@ const Login = () => {
       setRole("");
       setEmail("");
       setIsAuthorized(true);
-      setUser(response.data.data)
+      setUser(response.data.data);
+      localStorage.setItem("accessToken", response.data.data.accessToken);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error.message);
     }
   };
@@ -74,7 +82,7 @@ const Login = () => {
                   placeholder="ganesh@gmail.com"
                   autoComplete="email"
                 />
-                <MdOutlineMailOutline/>
+                <MdOutlineMailOutline />
               </div>
             </div>
             <div className="inputTag">
@@ -87,11 +95,13 @@ const Login = () => {
                   placeholder="XXXXXXXX"
                   autoComplete="current-password"
                 />
-                <RiLock2Fill/>
+                <RiLock2Fill />
               </div>
             </div>
-            <button onClick={handleLogin} type="submit">Login</button>
-            <Link to={'/register'}>register Now</Link>
+            <button onClick={handleLogin} type="submit">
+              Login
+            </button>
+            <Link to={"/register"}>register Now</Link>
           </form>
         </div>
         <div className="banner">
