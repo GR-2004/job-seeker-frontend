@@ -48,9 +48,14 @@ const Login = () => {
     }
   };
 
-  if (isAuthorized) {
-    return <Navigate to={"/"} />;
-  }
+  useEffect(() => {
+    if (isAuthorized) {
+      return <Navigate to={"/"} />;
+    }
+    else{
+      return <Navigate to={"/login"}/> 
+    }
+  }, []);
 
   return (
     <>
