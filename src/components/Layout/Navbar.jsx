@@ -25,6 +25,7 @@ const Navbar = () => {
       toast.success(response.data.message);
       setIsAuthorized(false);
       setUser(null);
+      localStorage.removeItem("accessToken");
       navigateTo("/login");
     } catch (error) {
       toast.error(error.message), setIsAuthorized(true);
