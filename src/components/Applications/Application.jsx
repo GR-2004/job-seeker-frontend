@@ -36,7 +36,7 @@ const Application = () => {
     formData.append("jobId", id);
 
     try {
-      const token = user?.accessToken;
+      const token = localStorage.getItem('accessToken');
       const { data } = await axios.post(
         `https://job-seeker-backend.onrender.com/api/v1/applications/postApplication/${id}`,
         formData,
@@ -62,10 +62,11 @@ const Application = () => {
   };
 
   useEffect(() => {
-    if (!isAuthorized || (user.user && user.user.role === "Recruiter")) {
+    const token = localStorage.getItem('accessToken');
+    if (!token || (user.user && user.user.role !== "Recruiter")) {
       navigateTo("/");
     }
-  }, [isAuthorized, user, navigateTo]);
+  }, [user, navigateTo]);
 
   return (
     <>

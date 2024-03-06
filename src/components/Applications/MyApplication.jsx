@@ -21,7 +21,7 @@ const MyApplication = () => {
     const fetchData = async () => {
       try {
         if (user.user && user.user.role === "Recruiter") {
-          const token = user?.accessToken;
+          const token = localStorage.getItem('accessToken');
           const res = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/applications/recruiter/getAllApplications",
             {
@@ -33,7 +33,7 @@ const MyApplication = () => {
           );
           setApplication(res.data.data);
         } else {
-          const token = user?.accessToken;
+          const token = localStorage.getItem('accessToken');
           const res = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/applications/jobSeeker/getAllApplications",
             {
@@ -54,14 +54,15 @@ const MyApplication = () => {
   }, [isAuthorized, user]);
 
   useEffect(() => {
-    if (!isAuthorized) {
-      navigateTo("/login");
+    const token = localStorage.getItem('accessToken');
+    if (!token || (user.user && user.user.role !== "Recruiter")) {
+      navigateTo("/");
     }
-  }, [isAuthorized, navigateTo]);
+  }, [user, navigateTo]);
 
   const deleteApplication = async (id) => {
     try {
-      const token = user?.accessToken;
+      const token = localStorage.getItem('accessToken');
       const res = await axios.delete(
         `https://job-seeker-backend.onrender.com/api/v1/applications/deleteApplication/${id}`,
         {
