@@ -13,7 +13,7 @@ const JobDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = user?.accessToken;
+        const token = localStorage.getItem('accessToken');
         const response = await axios.get(
           `https://job-seeker-backend.onrender.com/api/v1/jobs/getAJob/${id}`,
           {
@@ -33,10 +33,11 @@ const JobDetails = () => {
   }, [id]);
 
   useEffect(() => {
-    if (!isAuthorized) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       navigateTo("/login");
     }
-  }, [isAuthorized, navigateTo]);
+  }, [navigateTo]);
 
   return (
     <>

@@ -17,7 +17,7 @@ const MyJob = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const token = user?.accessToken;
+        const token = localStorage.getItem('accessToken');
         const { data } = await axios.get(
           "https://job-seeker-backend.onrender.com/api/v1/jobs/getMyPostedJobs",
           {
@@ -37,10 +37,11 @@ const MyJob = () => {
   }, []);
 
   useEffect(() => {
-    if (!isAuthorized || (user.user && user.user.role !== "Recruiter")) {
+    const token = localStorage.getItem('accessToken');
+    if (!token || (user.user && user.user.role !== "Recruiter")) {
       navigateTo("/");
     }
-  }, [isAuthorized, user, navigateTo]);
+  }, [user, navigateTo]);
 
   //function for enabling editing mode
   const handleEnableEdit = (jobId) => {
@@ -55,7 +56,7 @@ const MyJob = () => {
   //function for editing job
   const handleUpdateJob = async (jobId) => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
-    const token = user?.accessToken;
+    const token = localStorage.getItem('accessToken');
     await axios
       .put(
         `https://job-seeker-backend.onrender.com/api/v1/jobs/updatejob/${jobId}`,
@@ -78,7 +79,7 @@ const MyJob = () => {
 
   //function for deleting job
   const handleDeleteJob = async (jobId) => {
-    const token = user?.accessToken;
+    const token = localStorage.getItem('accessToken');
     await axios
       .delete(
         `https://job-seeker-backend.onrender.com/api/v1/jobs/deleteJob/${jobId}`,

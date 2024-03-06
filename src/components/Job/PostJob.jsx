@@ -21,7 +21,7 @@ const PostJob = () => {
     e.preventDefault();
 
     try {
-      const token = user?.accessToken;
+      const token = localStorage.getItem('accessToken');
       await axios.post(
         "https://job-seeker-backend.onrender.com/api/v1/jobs/postJob",
         {
@@ -51,10 +51,11 @@ const PostJob = () => {
   };
 
   useEffect(() => {
-    if (!isAuthorized || (user.user && user.user.role !== "Recruiter")) {
+    const token = localStorage.getItem('accessToken');
+    if (!token || (user.user && user.user.role !== "Recruiter")) {
       navigateTo("/");
     }
-  }, [isAuthorized, user, navigateTo]);
+  }, [user, navigateTo]);
 
   return (
     <>
