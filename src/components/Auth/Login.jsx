@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -11,9 +11,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
+
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async () => {
+    setLoading(true); // Show loader when login button is clicked
     try {
       const response = await axios.post(
         "https://job-seeker-backend.onrender.com/api/v1/users/login",
@@ -31,19 +34,19 @@ const Login = () => {
       setEmail("");
       setIsAuthorized(true);
       setUser(response.data.data);
-      // Set user role and access token in localStorage with expiration time of 12 hours
-      const expirationTime = Date.now() + 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+      const expirationTime = Date.now() + 12 * 60 * 60 * 1000;
       localStorage.setItem("userRole", response.data.data.user.role);
       localStorage.setItem("accessToken", response.data.data.accessToken);
       localStorage.setItem("expirationTime", expirationTime.toString());
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false); // Hide loader after login request is completed
     }
-  }, [email, password, role, setIsAuthorized, setUser]);
+  };
 
   useEffect(() => {
-    // Check if the user is already authorized (has a valid access token)
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       setIsAuthorized(true);
@@ -61,6 +64,7 @@ const Login = () => {
 
   return (
     <>
+      {loading && <div className="loader"></div>} {/* Loader */}
       <div className="authPage">
         <div className="container">
           <div className="header">

@@ -1400,3 +1400,37 @@ nav .hamburger {
   max-width: 100%;
   height: auto;
 }
+
+/* Loader styles */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive loader */
+@keyframes loader-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader:after {
+  content: " ";
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 5px solid #007bff;
+  border-color: #007bff transparent #007bff transparent;
+  animation: loader-animation 1.2s linear infinite;
+}
