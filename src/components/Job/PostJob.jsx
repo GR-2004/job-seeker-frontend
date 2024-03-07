@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PostJob = () => {
   const [title, setTitle] = useState("");
@@ -16,6 +16,8 @@ const PostJob = () => {
 
   const { isAuthorized, user } = useContext(Context);
   const navigateTo = useNavigate();
+
+  const userRole = localStorage.getItem('userRole');
 
   const handleJobPost = async (e) => {
     e.preventDefault();
@@ -44,6 +46,7 @@ const PostJob = () => {
       );
 
       toast.success("Job posted successfully!");
+      navigateTo("/job/getall");
     } catch (error) {
       console.error("Error posting job:", error);
       toast.error(error.message);
@@ -52,7 +55,7 @@ const PostJob = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!token || (user.user && user.user.role !== "Recruiter")) {
+    if (!token || (userRole && userRole !== "Recruiter")) {
       navigateTo("/");
     }
   }, [user, navigateTo]);
@@ -147,7 +150,7 @@ const PostJob = () => {
                 placeholder="Enter Required Skills"
               />
             </div>
-            <Link to={`/job/getall`}>Create Job</Link>
+            <button type="submit">Create Job</button>
           </form>
         </div>
       </div>
