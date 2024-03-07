@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Context } from "./main";
 import Login from "./components/Auth/Login.jsx";
 import Register from "./components/Auth/Register.jsx";
@@ -21,8 +21,6 @@ import { Toaster } from "react-hot-toast";
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser, user } = useContext(Context);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const checkExpiration = () => {
       const expirationTime = localStorage.getItem("expirationTime");
@@ -32,7 +30,6 @@ const App = () => {
         localStorage.removeItem("expirationTime");
         setIsAuthorized(false);
         setUser(null);
-        navigate("/login");
       }
     };
 
