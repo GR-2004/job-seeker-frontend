@@ -10,6 +10,8 @@ const JobDetails = () => {
 
   const { isAuthorized, user } = useContext(Context);
 
+  const userRole = localStorage.getItem('userRole');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,7 +75,7 @@ const JobDetails = () => {
               Posted On: <span> {job.jobPostedOn} </span>
             </p>
             <p>
-              {user.user && user.user.role === "Recruiter" ? (
+              {userRole && userRole === "Recruiter" ? (
                 <></>
               ) : (
                 <Link to={`/application/${job._id}`}>Apply Now</Link>

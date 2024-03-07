@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PostJob = () => {
   const [title, setTitle] = useState("");
@@ -147,7 +147,7 @@ const PostJob = () => {
                 placeholder="Enter Required Skills"
               />
             </div>
-            <button type="submit">Create Job</button>
+            <Link to={`/job/getall`}>Create Job</Link>
           </form>
         </div>
       </div>
