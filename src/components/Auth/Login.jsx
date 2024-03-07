@@ -41,7 +41,11 @@ const Login = () => {
       setEmail("");
       setIsAuthorized(true);
       setUser(response.data.data);
+      // Set user role and access token in localStorage with expiration time of 12 hours
+      const expirationTime = Date.now() + 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+      localStorage.setItem("userRole", response.data.data.role);
       localStorage.setItem("accessToken", response.data.data.accessToken);
+      localStorage.setItem("expirationTime", expirationTime.toString());
     } catch (error) {
       console.log(error);
       toast.error(error.message);

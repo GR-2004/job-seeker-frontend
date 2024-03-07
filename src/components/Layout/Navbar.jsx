@@ -26,11 +26,16 @@ const Navbar = () => {
       setIsAuthorized(false);
       setUser(null);
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("userRole");
       navigateTo("/login");
     } catch (error) {
       toast.error(error.message), setIsAuthorized(true);
     }
   };
+
+  // Retrieve user role from localStorage
+  const userRole = localStorage.getItem('userRole');
+
 
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
@@ -51,12 +56,10 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"/applications/me"} onClick={() => setShow(false)}>
-              {user && user.user && user.user.role === "Recruiter"
-                ? "APPLICANT'S APPLICATIONS"
-                : "MY APPLICATIONS"}
+                {userRole === "Recruiter" ? "APPLICANT'S APPLICATIONS" : "MY APPLICATIONS"}
             </Link>
           </li>
-          {user && user.user && user.user.role === "Recruiter" ? (
+          {userRole === "Recruiter" ? (
             <>
               <li>
                 <Link to={"/job/post"} onClick={() => setShow(false)}>

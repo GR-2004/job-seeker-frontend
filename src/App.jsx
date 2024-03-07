@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "./main";
 import Login from "./components/Auth/Login.jsx";
 import Register from "./components/Auth/Register.jsx";
@@ -20,12 +20,31 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser, user } = useContext(Context);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkExpiration = () => {
+      const expirationTime = localStorage.getItem("expirationTime");
+      if (expirationTime && Date.now() > parseInt(expirationTime)) {
+        // Clear expired data from localStorage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("expirationTime");
+        setIsAuthorized(false);
+        setUser(null);
+        navigate("/login");
+      }
+    };
+
+    checkExpiration();
+  }, [setIsAuthorized, setUser]);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         // const token = user?.accessToken; // Access token might not exist if the user is not authenticated
 
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem("accessToken");
 
         if (token) {
           const { data } = await axios.get(
@@ -50,7 +69,6 @@ const App = () => {
 
     fetchUser();
   }, [setIsAuthorized, setUser]);
-
 
   return (
     <>
