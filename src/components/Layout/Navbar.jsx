@@ -35,8 +35,6 @@ const Navbar = () => {
 
   // Retrieve user role from localStorage
   const userRole = localStorage.getItem('userRole');
-  console.log(userRole)
-
 
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>

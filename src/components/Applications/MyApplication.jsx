@@ -16,11 +16,13 @@ const MyApplication = () => {
   const [resumeImageUrl, setResumeImageUrl] = useState("");
   const { isAuthorized, user } = useContext(Context);
   const navigateTo = useNavigate();
+  
+  const userRole = localStorage.getItem('userRole');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (user.user && user.user.role === "Recruiter") {
+        if (userRole && userRole === "Recruiter") {
           const token = localStorage.getItem('accessToken');
           const res = await axios.get(
             "https://job-seeker-backend.onrender.com/api/v1/applications/recruiter/getAllApplications",
@@ -95,7 +97,7 @@ const MyApplication = () => {
   return (
     <>
       <section className="my_applications page">
-        {user.user && user.user.role === "Job Seeker" ? (
+        {userRole && userRole === "Job Seeker" ? (
           <div className="container">
             <h3>My Applications</h3>
             {application.length <= 0 ? (
