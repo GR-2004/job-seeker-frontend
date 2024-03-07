@@ -10,6 +10,15 @@ const Navbar = () => {
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
   const navigateTo = useNavigate();
 
+  useEffect(() => {
+    // Check if user is logged in and has the role stored in localStorage
+    if (isAuthorized && localStorage.getItem("userRole") === "Recruiter") {
+      setShowRecruiterLinks(true);
+    } else {
+      setShowRecruiterLinks(false);
+    }
+  }, [isAuthorized]);
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem('accessToken');
@@ -35,7 +44,7 @@ const Navbar = () => {
 
   // Retrieve user role from localStorage
   const userRole = localStorage.getItem('userRole');
-
+  const [showRecruiterLinks, setShowRecruiterLinks] = useState(false);
 
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
@@ -56,10 +65,10 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"/applications/me"} onClick={() => setShow(false)}>
-                {userRole === "Recruiter" ? "APPLICANT'S APPLICATIONS" : "MY APPLICATIONS"}
+              {showRecruiterLinks ? "APPLICANT'S APPLICATIONS" : "MY APPLICATIONS"}
             </Link>
           </li>
-          {userRole === "Recruiter" ? (
+          {showRecruiterLinks && (
             <>
               <li>
                 <Link to={"/job/post"} onClick={() => setShow(false)}>
@@ -72,8 +81,6 @@ const Navbar = () => {
                 </Link>
               </li>
             </>
-          ) : (
-            <></>
           )}
 
           <button onClick={handleLogout}>LOGOUT</button>
