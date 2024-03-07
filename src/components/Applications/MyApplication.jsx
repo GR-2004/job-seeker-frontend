@@ -55,10 +55,10 @@ const MyApplication = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!token || (user.user)) {
+    if (!token) {
       navigateTo("/");
     }
-  }, [user, navigateTo]);
+  }, [navigateTo]);
 
   const deleteApplication = async (id) => {
     try {
