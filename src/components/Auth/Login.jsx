@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -11,19 +11,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
 
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
-
-  useEffect(() => {
-    // Check if the user is already authorized (has a valid access token)
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      setIsAuthorized(true);
-    }
-  }, [setIsAuthorized]);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = useCallback(async () => {
     try {
       const response = await axios.post(
         "https://job-seeker-backend.onrender.com/api/v1/users/login",
@@ -50,6 +40,19 @@ const Login = () => {
       console.log(error);
       toast.error(error.message);
     }
+  }, [email, password, role, setIsAuthorized, setUser]);
+
+  useEffect(() => {
+    // Check if the user is already authorized (has a valid access token)
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setIsAuthorized(true);
+    }
+  }, [setIsAuthorized]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   if (isAuthorized) {
@@ -64,7 +67,7 @@ const Login = () => {
             <img src="/JobZeelogo.png" alt="logo" />
             <h3>Login to your account</h3>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="inputTag">
               <label>Login as</label>
               <div>
@@ -102,10 +105,8 @@ const Login = () => {
                 <RiLock2Fill />
               </div>
             </div>
-            <button onClick={handleLogin} type="submit">
-              Login
-            </button>
-            <Link to={"/register"}>register Now</Link>
+            <button type="submit">Login</button>
+            <Link to={"/register"}>Register Now</Link>
           </form>
         </div>
         <div className="banner">
