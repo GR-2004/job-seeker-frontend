@@ -63,7 +63,7 @@ const Application = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!token || (user.user && user.user.role !== "Recruiter")) {
+    if (!token || (user.user && user.user.role === "Recruiter")) {
       navigateTo("/");
     }
   }, [user, navigateTo]);
