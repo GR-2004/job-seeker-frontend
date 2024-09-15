@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaRegUser } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { MdOutlineMailOutline } from "react-icons/md"
@@ -14,8 +14,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
   const [fullname, setFullname] = useState("");
-
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -36,15 +35,12 @@ const Register = () => {
       setPassword("");
       setRole("");
       setEmail("");
-      setIsAuthorized(true);
+      navigate("/login");
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  if (isAuthorized) {
-    return <Navigate to={"/login"} />;
-  }
 
   return (
     <>
