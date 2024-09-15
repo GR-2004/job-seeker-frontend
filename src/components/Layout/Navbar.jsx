@@ -29,7 +29,8 @@ const Navbar = () => {
       localStorage.removeItem("userRole");
       navigateTo("/login");
     } catch (error) {
-      toast.error(error.message), setIsAuthorized(true);
+      toast.error(error.message);
+      setIsAuthorized(true);
     }
   };
 
